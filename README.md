@@ -2,6 +2,7 @@
 ![version](https://img.shields.io/badge/version-1.0.0-blue)
 
 ![Intro](https://i.ibb.co/MNnVgr1/MOSHED-2021-3-17-21-17-53.gif)
+
 PYrus is a prank virus built on python. It does not harm the computer in any way. Python is necessary to run the program. It only runs on **Windows** since it is showing the _Blue Screen of Death_ and dependencies won't work on other operating systems.
 
 > Disclaimer: This is not an _actual_ virus. It shows only pictures and plays sounds to make it look scary. It won't be responsible for any _real_ computer viruses affected your computer in any way.
