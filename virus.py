@@ -1,8 +1,8 @@
-import pyautogui as py
-from PIL import Image, ImageTk
+import pyautogui as py  # It is required for taking a screenshot of desktop
+from PIL import Image, ImageTk  # Important for showing BSOD
 import winsound
 import time
-import subprocess
+import subprocess  # To run AHK script to max the volume
 try:
     import Tkinter as tk
 except ImportError:
@@ -16,16 +16,22 @@ im = py.screenshot('ss.png')
 ISRUN = False
 TOTALLOOP = 0
 
-def toggle_geom():
-    print("Empty")
 
-subprocess.Popen("ahk.exe sound.ahk")
-root=tk.Tk()
-root.geometry("{}x{}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
+def toggle_geom():
+    pass  # To prevent <ESC> and <ALT+F4> to work
+
+
+subprocess.Popen("ahk.exe sound.ahk")  # Maximize the sound
+root = tk.Tk()
+root.geometry("{}x{}+0+0".format(root.winfo_screenwidth(),
+              root.winfo_screenheight()))
 bg = tk.PhotoImage(file="ss.png")
-bgimage = tk.Label(root, image=bg, width=root.winfo_screenwidth(), height=root.winfo_screenheight(), borderwidth=0)
+bgimage = tk.Label(root, image=bg, width=root.winfo_screenwidth(),
+                   height=root.winfo_screenheight(), borderwidth=0)
 bgimage.place(x=0, y=0)
-def update(ind):
+
+
+def update(ind):  # Play GIF file
     global TOTALLOOP
     if ind == 80:
         ind = 0
@@ -35,7 +41,8 @@ def update(ind):
     else:
         indText = str(ind)
     directoryName = "./BSOD/bsodgif/frame_" + indText + "_delay-0.05s.png"
-    img = Image.open(directoryName).resize((root.winfo_screenwidth(), root.winfo_screenheight()), Image.ANTIALIAS)
+    img = Image.open(directoryName).resize(
+        (root.winfo_screenwidth(), root.winfo_screenheight()), Image.ANTIALIAS)
     bg2 = ImageTk.PhotoImage(img)
     bgimage.configure(image=bg2)
     bgimage.image = bg2
@@ -44,7 +51,8 @@ def update(ind):
     if TOTALLOOP < 4:
         root.after(5, update, ind)
     else:
-        img = Image.open("./BSOD/bsod7.png").resize((root.winfo_screenwidth(), root.winfo_screenheight()), Image.ANTIALIAS)
+        img = Image.open("./BSOD/bsod7.png").resize((root.winfo_screenwidth(),
+                                                     root.winfo_screenheight()), Image.ANTIALIAS)
         bg1 = ImageTk.PhotoImage(img)
         bgimage.configure(image=bg1)
         bgimage.image = bg1
@@ -54,14 +62,17 @@ def update(ind):
         root.destroy()
         exit()
 
-def updateImg(numb, sleepNum):
+
+def updateImg(numb, sleepNum):  # Image changer
     imgName = "./BSOD/bsod" + str(numb) + ".png"
-    img = Image.open(imgName).resize((root.winfo_screenwidth(), root.winfo_screenheight()), Image.ANTIALIAS)
+    img = Image.open(imgName).resize(
+        (root.winfo_screenwidth(), root.winfo_screenheight()), Image.ANTIALIAS)
     bg1 = ImageTk.PhotoImage(img)
     bgimage.configure(image=bg1, cursor='none')
     bgimage.image = bg1
     root.update()
     time.sleep(sleepNum)
+
 
 def initiate(e):
     global ISRUN
@@ -84,10 +95,12 @@ def initiate(e):
         updateImg(5, 3)
         winsound.PlaySound('loop.wav', winsound.SND_LOOP + winsound.SND_ASYNC)
         root.after(0, update, 0)
+
+
 bgimage.bind('<Button-1>', initiate)
 root.attributes("-fullscreen", True)
-root.bind('<Escape>',toggle_geom)
+root.bind('<Escape>', toggle_geom)
 root.attributes('-topmost', True)
 root.update()
-#root.protocol("WM_DELETE_WINDOW",toggle_geom)
+# root.protocol("WM_DELETE_WINDOW",toggle_geom)
 root.mainloop()
